@@ -1,4 +1,4 @@
-*instruciones para inicializar el git desde el principio
+g*instruciones para inicializar el git desde el principio
 1.ubicate en la carpeta donde quieres que se actualizen los archivos
 2.clic derecho enun espacio en blanco y clic en git bash
 comienza la parte del codigo:

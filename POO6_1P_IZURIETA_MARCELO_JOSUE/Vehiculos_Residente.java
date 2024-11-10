@@ -6,7 +6,6 @@ import java.util.Scanner;
 public class Vehiculos_Residente extends Vehiculos {
     private Residente residente;
     public static int n = 1;
-    
 
     // * constructor del vehiculo residente */
     public Vehiculos_Residente(Residente residente, String placa, String propietario, boolean estado) {
@@ -36,32 +35,33 @@ public class Vehiculos_Residente extends Vehiculos {
         System.out.println("Propietario del Vehículo: " + getPropietario());
         System.out.println("Placa: " + getPlaca());
         System.out.println("Residencia: " + residente.getNumeroResidencia());
-        // System.out.println("Ubicación: " + residente.getDireccionResidencia());
+        System.out.println("Ubicación: " + residente.getDireccionResidencia());
     }
 
     // *Registra el ingreso */
-    public void RegistarIngeso(){
+    public void RegistarIngeso() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Ingrese la placa del vehiculo:");
-        String placaIngresada =  sc.nextLine();
-        if (placaIngresada.equalsIgnoreCase(getPlaca())){ //!!!!!
-            if (!getEstado()){
+        String placaIngresada = sc.nextLine();
+        if (placaIngresada.equalsIgnoreCase(getPlaca())) { // !!!!!
+            if (!getEstado()) {
                 setEstado(true);
                 System.out.println("Ingreso registrado para el vehículo: " + getPlaca());
 
                 mostrarInformacionPropietario();
                 guardarRegistro("ingreso");
-            }else{
+            } else {
                 System.out.println("El vehículo ya se encuentra dentro de la ciudadela.");
 
-            }else{
-                System.out.println("La placa ingresada no coincide con la del vehículo.");}
-
+            }
+        } else {
+            System.out.println("La placa ingresada no coincide con la del vehículo.");
         }
+
     }
 
-    //*Registra la salida */
-    public void RegistarSalida(){
+    // *Registra la salida */
+    public void RegistarSalida() {
         Scanner sc = new Scanner(System.in);
         System.out.print("Ingrese la placa del vehículo: ");
         String placaIngresada = sc.nextLine();
@@ -79,24 +79,22 @@ public class Vehiculos_Residente extends Vehiculos {
         }
     }
 
-    }
-
-    
-
     // *Crea el archivo si es la primera vez y guarda los ingreos */
-    private void guardarRegistro(String tipoMovimiento) {
+    public void guardarRegistro(String tipoMovimiento) {
         try (FileWriter fw = new FileWriter("residentes.txt", true);
                 PrintWriter pw = new PrintWriter(fw)) {
-            pw.println("Acceso n :" + n);
+            pw.println("Acceso n :" + Vehiculos_Residente.n);
             pw.println("Movimiento: " + tipoMovimiento);
             pw.println("Placa: " + getPlaca());
             pw.println("Propietario: " + getPropietario());
             pw.println("Residencia: " + residente.getNumeroResidencia());
+            pw.println("Direccion de la Residencia: " + residente.getDireccionResidencia());
             pw.println("Estado actual: " + getEstado());
             pw.println("--------------");
-            n += 1;
+            Vehiculos_Residente.n += 1;
         } catch (IOException e) {
             System.out.println("Error al guardar el registro en residentes.txt: " + e.getMessage());
         }
     }
 
+}

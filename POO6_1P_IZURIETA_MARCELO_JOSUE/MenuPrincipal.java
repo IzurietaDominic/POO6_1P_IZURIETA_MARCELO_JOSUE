@@ -1,10 +1,20 @@
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MenuPrincipal {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        Residente residente1 = new Residente("1234", "Juan Pérez", "Calle Ficticia 123");
+        Vehiculos_Residente vehiculoResidente1 = new Vehiculos_Residente(residente1, "ABC123", "Juan Pérez", false);
+
+
+
+        
+
         int eleccion;
+
         System.out.println("Bienvenido al menu principal de nuestro sistema \n Escoja las siguientes 8 opciones:");
 
         do {
@@ -36,16 +46,26 @@ public class MenuPrincipal {
                     break;
                 case 6:
                     System.out.println("Ha elegido la opcion 6");
-                    System.out.println(
-                            "Si va a registrar el ingreso de un vehiculo residente, escriba 1 \n Si va registrar la salida de un vehiculo residente escriba 2 \n Si desea volver al menu principal escriba 0 ");
-                    int opcion = sc.nextInt();
+                    int opcion;
+                    
                     do {
-                        switch (opcion) {
+                        System.out.println(
+                            "Si va a registrar el ingreso de un vehiculo residente, escriba 1 \n Si va registrar la salida de un vehiculo residente escriba 2 \n Si desea volver al menu principal escriba 0 ");
+                            opcion = sc.nextInt();
+                            switch (opcion) {
+                           
                             case 1:
+                            
+                            vehiculoResidente1.RegistarIngeso();
+                            
                                 break;
                             case 2:
+                            vehiculoResidente1.RegistarSalida();;
+                            
                                 break;
                             case 0:
+                            System.out.println("Regresando al menú principal...");
+
                                 break;
                             default:
                                 System.out.println("Por favor, intentelo nuevamente");
@@ -53,8 +73,9 @@ public class MenuPrincipal {
                         }
                         System.out.println("");
 
-                        break;
+                        
                     } while (opcion != 0);
+                    break;
 
                 case 7:
                     System.out.println("Ha elegido la opcion 7");

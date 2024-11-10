@@ -1,0 +1,24 @@
+Acceso n :1
+Movimiento: ingreso
+Placa: ABC123
+Propietario: Juan Pérez
+Residencia: Calle Ficticia 123
+Direccion de la Residencia: null
+Estado actual: true
+--------------
+Acceso n :1
+Movimiento: ingreso
+Placa: ABC123
+Propietario: Juan Pérez
+Residencia: Calle Ficticia 123
+Direccion de la Residencia: null
+Estado actual: true
+--------------
+Acceso n :2
+Movimiento: Salida
+Placa: ABC123
+Propietario: Juan Pérez
+Residencia: Calle Ficticia 123
+Direccion de la Residencia: null
+Estado actual: false
+--------------

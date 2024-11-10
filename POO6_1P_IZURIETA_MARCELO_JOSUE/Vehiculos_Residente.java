@@ -91,7 +91,7 @@ public class Vehiculos_Residente extends Vehiculos {
             pw.println("Direccion de la Residencia: " + residente.getDireccionResidencia());
             pw.println("Estado actual: " + getEstado());
             pw.println("--------------");
-            Vehiculos_Residente.n += 1;
+            Vehiculos_Residente.n ++;
         } catch (IOException e) {
             System.out.println("Error al guardar el registro en residentes.txt: " + e.getMessage());
         }

@@ -26,7 +26,7 @@ public class Ciudadela {
         etapas.add(e);  // Añade la etapa a la lista
     }
 
-    // Método para buscar una etapa por su nombre en la lista de etapas
+    // Metodo para buscar una etapa por su nombre en la lista de etapas
     public Etapa BuscarEtapa(String n) {
         // Recorre todas las etapas en la lista
         for (Etapa e : etapas) {

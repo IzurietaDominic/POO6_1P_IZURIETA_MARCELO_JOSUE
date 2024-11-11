@@ -35,7 +35,7 @@ public class Etapa {
     public void GuardarResidencia() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivoResidencias))) {
             for (Residencia residencia : residencias) {
-                writer.write("Nombre de la Villa: "+ residencia.getVilla() + ", Numero de la Manzana: " + residencia.getManzana());
+                writer.write("Nombre de la Villa: "+ residencia.getVilla() + ", Numero de la Manzana: " + residencia.getManzana()+", Numero de la casa: " + residencia.Numerocasa());
                 writer.newLine();
             }
         } catch (IOException e) {
@@ -44,3 +44,4 @@ public class Etapa {
     }
 
 }
+

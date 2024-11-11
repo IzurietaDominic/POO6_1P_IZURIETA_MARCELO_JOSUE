@@ -1,12 +1,12 @@
 
 public class Contactos {
     private String nombre;
-    private int telefono;
+    private String telefono;
     private Residencia residencia;
     
     //constructor
 
-    public Contactos(String nombre, int telefono, Residencia residencia) {
+    public Contactos(String nombre, String telefono, Residencia residencia) {
         this.nombre = nombre;
         this.telefono = telefono;
         this.residencia = residencia;
@@ -22,11 +22,11 @@ public class Contactos {
         this.nombre = nombre;
     }
 
-    public int getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 

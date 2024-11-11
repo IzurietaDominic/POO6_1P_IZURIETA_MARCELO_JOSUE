@@ -1,7 +1,8 @@
 
-import java.util.list;
+
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Evento {
@@ -9,11 +10,11 @@ private String fecha;
 private Residencia ubicacion;
 private String nombreEvento;
 private int visitantes;
-private List<Visitantes> visitantesEsperados;
+private List<Visitante> visitantesEsperados;
     
     // costructor
     
-    public Evento(String fecha, Residencia ubicacion, String nombreEvento, List<Visitantes> visitantesEsperados) {
+    public Evento(String fecha, Residencia ubicacion, String nombreEvento, List<Visitante> visitantesEsperados) {
         this.fecha = fecha;
         this.ubicacion = ubicacion;
         this.nombreEvento = nombreEvento;
@@ -53,22 +54,26 @@ private List<Visitantes> visitantesEsperados;
         this.visitantes = visitantes;
     }
 
-    public List<Visitantes> getVisitantesEsperados() {
+    public List<Visitante> getVisitantesEsperados() {
         return visitantesEsperados;
     }
 
-    public void setVisitantesEsperados(<any> visitantesEsperados) {
+    public void setVisitantesEsperados(List<Visitante> visitantesEsperados) {
+    if (visitantesEsperados == null) {
+        this.visitantesEsperados = new ArrayList<>();
+    } else {
         this.visitantesEsperados = visitantesEsperados;
     }
+}
     
     
-    public void agregarVisitante(Visitantes visitante) {
+    public void agregarVisitante(Visitante visitante) {
         visitantesEsperados.add(visitante);
         visitantes++; 
     }
     public void guardarEvento() {
         try (FileWriter writer = new FileWriter("Evento.txt", true)) {
-            writer.write(fecha + "," + ubicacion.getDireccion() + "," + nombreEvento + "," + visitantes + "\n");
+            writer.write(fecha + "," + ubicacion.getUbicacion() + "," + nombreEvento + "," + visitantes + "\n");
         } catch (IOException e) {
             System.err.println("Error al guardar el evento: " + e.getMessage());
         }    

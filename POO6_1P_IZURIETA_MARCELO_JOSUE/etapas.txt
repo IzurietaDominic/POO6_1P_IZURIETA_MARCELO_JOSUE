@@ -1,0 +1,12 @@
+Etapa1:Messi
+Ubicación: Sur
+Descripción: es de messi
+-----------------------------------------
+Etapa1:Messi
+Ubicación: Sur
+Descripción: es de messi
+-----------------------------------------
+Etapa2:Ronaldo
+Ubicación: Norte
+Descripción: es de Ronaldo
+-----------------------------------------

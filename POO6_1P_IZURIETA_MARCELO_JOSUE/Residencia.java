@@ -1,28 +1,46 @@
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 public class Residencia {
     private String villa;
+    private String ubicacion;
     private int manzana;
-    private List<Residentes> residentes;
+    private List<Residente> residentes;
     private List<Contactos> contactos;
-    private List<Vehiculos> vehiculos;
+    private List<Vehiculos> vehiculoResidente;
+    private List<Evento> eventos;
+    
 
-    public Residencia(String villa, int manzana) {
+    //*Constructor Residencia */
+    public Residencia(String villa, String ubicacion,int manzana) {
         this.villa = villa;
+        this.ubicacion = ubicacion;
         this.manzana = manzana;
-        this.residentes = new ArrayList<>();
         this.contactos = new ArrayList<>();
-        this.vehiculos = new ArrayList<>(); }
-
-    public Residencia(String villa, int manzana, List<Residentes> residentes, List<Contactos> contactos, List<Vehiculos> vehiculos) {
-        this.villa = villa;
-        this.manzana = manzana;
-        this.residentes = residentes;
-        this.contactos = contactos;
-        this.vehiculos = vehiculos;
+        this.vehiculoResidente = new ArrayList<>();
+        this.eventos = new ArrayList<>();
+    }
+    //*Agregar contacto a la residencia */
+    public void agregarContacto(Contactos contacto) {
+        contactos.add(contacto);
     }
 
+    //*Mostrar contactos de la residencia */
+    public void mostrarContactos() {
+        if (contactos.isEmpty()) {
+            System.out.println("No hay contactos registrados para esta residencia.");
+        } else {
+            System.out.println("Contactos de la residencia:");
+            for (Contactos contacto : contactos) {
+                System.out.println(contacto.toString());
+            }
+        }
+    }
     public String getVilla() {
         return villa;
     }
@@ -39,11 +57,11 @@ public class Residencia {
         this.manzana = manzana;
     }
 
-    public List<Residentes> getResidentes() {
+    public List<Residente> getResidentes() {
         return residentes;
     }
 
-    public void setResidentes(List<Residentes> residentes) {
+    public void setResidentes(List<Residente> residentes) {
         this.residentes = residentes;
     }
 
@@ -56,30 +74,51 @@ public class Residencia {
     }
 
     public List<Vehiculos> getVehiculos() {
-        return vehiculos;
+        return vehiculoResidente;
     }
 
-    public void setVehiculos(List<Vehiculos> vehiculos) {
-        this.vehiculos = vehiculos;
+    public void setVehiculos(List<Vehiculos> vehiculoResidente) {
+        this.vehiculoResidente = vehiculoResidente;
+    }
+
+    public String getUbicacion(){
+        return ubicacion;
     }
     
+    public void setUbicacion( String ubicacion){
+        this.ubicacion = ubicacion;
+    }
     // funciones personalizadas de la clase residencia 
     
-     public void agregarContacto(Contactos c) {
-        contactos.add(c);
-    }
 
-    public void registrarEvento(Eventos e) {
+    public void registrarEvento(Evento e) {
+        eventos.add(e);
         
     }
-
     public void agregarVehiculo(Vehiculos v) {
-        vehiculos.add(v);
+        vehiculoResidente.add(v);
     }
 
     public void guardarContacto() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("contactos.txt", true))) {
+            for (Contactos contacto : contactos) {
+                writer.write("Residencia: " + villa);
+                writer.newLine();
+                writer.write("Nombre: " + contacto.getNombre());
+                writer.newLine();
+                writer.write("Teléfono: " + contacto.getTelefono());
+                writer.newLine();
+                writer.write("----");
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Error al guardar los contactos.");
+            e.printStackTrace();
+        }
         
     }
+
+    
 
 
 

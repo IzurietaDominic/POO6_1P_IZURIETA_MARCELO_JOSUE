@@ -137,6 +137,22 @@ public class Ciudadela {
         }
     }
 
+    public void mostrarVehiculosPorResidencia() {
+        for (Etapa etapa : getEtapas()) {
+            System.out.println("Etapa: " + etapa.getNombre());
+            for (Residencia residencia : etapa.getResidencias()) {
+                System.out.println("  Residencia: " + residencia.getVilla());
+                if (residencia.getVehiculos().isEmpty()) {
+                    System.out.println("    No hay vehículos registrados.");
+                } else {
+                    for (Vehiculos vehiculo : residencia.getVehiculos()) {
+                        System.out.println("    Vehículo: " + vehiculo.toString());
+                    }
+                }
+            }
+        }
+    }
+
 
     
 

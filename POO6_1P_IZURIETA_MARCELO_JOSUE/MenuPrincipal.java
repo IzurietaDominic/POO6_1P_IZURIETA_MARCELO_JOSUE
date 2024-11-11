@@ -185,6 +185,7 @@ public class MenuPrincipal {
                     break;
                 case 8:
                     System.out.println("Ha elegido la opcion 8");
+                    ciudadela.mostrarVehiculosPorResidencia();
                     break;
                 case 9:
                     System.out.println("Saliendo...........\ntenga un buen dia");

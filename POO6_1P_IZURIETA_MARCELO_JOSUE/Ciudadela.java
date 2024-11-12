@@ -64,7 +64,7 @@ public class Ciudadela {
         }
         return null;
     }
-    
+
     // Metodo para guardar todas las etapas en el archivo especificado por
     // 'archivoEtapas'
     public void GuardarEtapa() {
@@ -72,19 +72,19 @@ public class Ciudadela {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("etapas.txt", true))) {
             // Recorre todas las etapas en la lista 'etapas'
             for (Etapa etapa : etapas) {
-                writer.write("Etapa"+n+":"+ etapa.getNombre());
+                writer.write("Etapa" + n + ":" + etapa.getNombre());
                 writer.newLine();
                 writer.write("Ubicación: " + etapa.getUbicacion());
                 writer.newLine();
-                writer.write("Descripción: " + etapa.getDescripcion()); 
+                writer.write("Descripción: " + etapa.getDescripcion());
                 writer.newLine();
-                writer.write("-----------------------------------------"); 
+                writer.write("-----------------------------------------");
                 writer.newLine();
-                n ++;
+                n++;
             }
         } catch (IOException e) {
-            System.out.println("Error al guardar las etapas."); 
-                                                            
+            System.out.println("Error al guardar las etapas.");
+
         }
     }
 
@@ -115,19 +115,56 @@ public class Ciudadela {
     public int hashCode() {
         return Objects.hash(nombre, etapas);
     }
-
-
-
+    public void cargarResidenciasDesdeArchivo() {
+        try (BufferedReader br = new BufferedReader(new FileReader("residencias.txt"))) {
+            String line;
+            
+            while ((line = br.readLine()) != null) {
+                // Verificar que la línea contiene "Nombre de la villa:" y procesar el bloque correspondiente
+                if (line.startsWith("Nombre de la villa:")) {
+                    String villa = line.substring(line.indexOf(":") + 1).trim();
+    
+                    // Leer el número de manzana
+                    line = br.readLine();
+                    if (line != null && line.startsWith("numero de Manzana:")) {
+                        int manzana = Integer.parseInt(line.substring(line.indexOf(":") + 1).trim());
+    
+                        // Leer la ubicación
+                        line = br.readLine();
+                        if (line != null && line.startsWith("ubicacion:")) {
+                            String ubicacion = line.substring(line.indexOf(":") + 1).trim();
+    
+                            // Crear una nueva instancia de Residencia con los datos leídos
+                            Residencia residencia = new Residencia(villa, ubicacion, manzana);
+    
+                            // Agregar la residencia a la primera etapa, o elegir una etapa basada en algún criterio.
+                            if (!etapas.isEmpty()) {
+                                etapas.get(0).AgregarResidencia(residencia); // Asignar a la primera etapa
+                            }
+                        }
+                    }
+                }
+    
+                // Leer el separador "----" y continuar con la siguiente residencia
+                line = br.readLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Error al cargar residencias desde el archivo: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            System.out.println("Error en el formato del archivo de residencias: " + e.getMessage());
+        }
+    }
     public void cargarEtapasDesdeArchivo() {
         try (BufferedReader reader = new BufferedReader(new FileReader("etapas.txt"))) {
             String linea;
             while ((linea = reader.readLine()) != null) {
-                if (linea.startsWith("Etapa")) {  // Asegúrate de que el archivo contiene una identificación para cada etapa
+                if (linea.startsWith("Etapa")) { // Asegúrate de que el archivo contiene una identificación para cada
+                                                 // etapa
                     String nombreEtapa = linea.split(":")[1].trim(); // Obtener el nombre de la etapa
                     String ubicacion = reader.readLine().split(":")[1].trim(); // Leer ubicación
                     String descripcion = reader.readLine().split(":")[1].trim(); // Leer descripción
                     Etapa etapa = new Etapa(nombreEtapa, ubicacion, descripcion);
-                    etapas.add(etapa);  
+                    etapas.add(etapa);
                     reader.readLine(); // Leer la línea separadora
                 }
             }
@@ -135,6 +172,7 @@ public class Ciudadela {
             System.out.println("Error al cargar las etapas.");
             e.printStackTrace();
         }
+
     }
 
     public void mostrarVehiculosPorResidencia() {
@@ -154,7 +192,5 @@ public class Ciudadela {
     }
 
 
-    
-
-    
+   
 }

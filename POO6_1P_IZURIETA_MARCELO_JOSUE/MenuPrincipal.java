@@ -7,9 +7,12 @@ public class MenuPrincipal {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         Ciudadela ciudadela = new Ciudadela("Ciudadela Principal");
+        
+
         Residente residente1 = new Residente("1234", "Juan Pérez", "Calle Ficticia 123");
         Vehiculos_Residente vehiculoResidente1 = new Vehiculos_Residente(residente1, "ABC123", "Juan Pérez", false);
-        
+        Visitante visitante1 = new Visitante("Maria García", "documento", "4567");
+        Vehiculos_Visitante vehiculoVisitante1 = new Vehiculos_Visitante("XYZ789", "Maria García", false, visitante1);
 
         int eleccion;
 
@@ -103,34 +106,30 @@ public class MenuPrincipal {
                     System.out.println("Ha elegido la opcion 3");
                     ciudadela.cargarEtapasDesdeArchivo();
                     for (Etapa etapa : ciudadela.getEtapas()) {
-                        etapa.cargarResidenciasDesdeArchivo(); 
+                        etapa.cargarResidenciasDesdeArchivo();
                     }
-                     
+
                     System.out.println("Seleccione una residencia:");
                     if (ciudadela.getEtapas().size() > 0 && !ciudadela.getEtapas().get(0).getResidencias().isEmpty()) {
                         System.out.println("Seleccione una residencia:");
-                        
+
                         for (Residencia residencia : ciudadela.getEtapas().get(0).getResidencias()) {
                             System.out.println("Residencia: " + residencia.getVilla());
                         }
                         sc.nextLine();
 
-
-                        // Pedir al usuario que ingrese el nombre de la villa seleccionada
                         System.out.print("Ingrese el nombre de la residencia para ver sus contactos: ");
                         String villaSeleccionada = sc.nextLine().trim();
 
-                        // Buscar la residencia seleccionada
-                        Residencia residenciaSeleccionada = null; // Asegúrate de inicializar la variable antes de
-                                                                  // usarla
+                        Residencia residenciaSeleccionada = null;
+
                         for (Residencia residencia : ciudadela.getEtapas().get(0).getResidencias()) {
                             if (residencia.getVilla().trim().equalsIgnoreCase(villaSeleccionada.trim())) {
                                 residenciaSeleccionada = residencia;
-                                break; // Si la encontramos, salimos del ciclo
+                                break;
                             }
                         }
 
-                        // Si se encontró la residencia, mostrar los contactos
                         if (residenciaSeleccionada != null) {
                             residenciaSeleccionada.mostrarContactos();
                         } else {
@@ -143,6 +142,64 @@ public class MenuPrincipal {
                     break;
                 case 4:
                     System.out.println("Ha elegido la opcion 4");
+                    sc.nextLine();
+                    ciudadela.cargarEtapasDesdeArchivo();
+                    System.out.print("Ingrese el nombre del evento: ");
+                    String nombreEvento = sc.nextLine();
+                    System.out.print("Ingrese la fecha del evento (formato dd/mm/yyyy): ");
+                    String fechaEvento = sc.nextLine();
+                    System.out.println("Seleccione una residencia de la ciudadela para el evento:");
+                    for (Etapa etapa : ciudadela.getEtapas()) {
+                        for (Residencia residencia : etapa.getResidencias()) {
+                            System.out.println("Residencia: " + residencia.getVilla());
+                        }
+                    }
+                    System.out.print("Ingrese el nombre de la residencia donde se llevará a cabo el evento: ");
+                    String villaSeleccionada = sc.nextLine().trim();
+
+                    Residencia residenciaSeleccionada = null;
+                    for (Etapa etapa : ciudadela.getEtapas()) {
+                        for (Residencia residencia : etapa.getResidencias()) {
+                            if (residencia.getVilla().trim().equalsIgnoreCase(villaSeleccionada.trim())) {
+                                residenciaSeleccionada = residencia;
+                                break;
+                            }
+                        }
+                        if (residenciaSeleccionada != null) {
+                            break;
+                        }
+                    }
+
+                    if (residenciaSeleccionada != null) {
+                        System.out.print("Ingrese la cantidad de personas esperadas para el evento: ");
+                        int cantidadVisitantes = sc.nextInt();
+                        sc.nextLine();
+
+                        List<Visitante> visitantesEsperados = new ArrayList<>();
+                        for (int i = 0; i < cantidadVisitantes; i++) {
+                            System.out.println("Ingrese los detalles del visitante " + (i + 1) + ":");
+                            System.out.print("Nombre del visitante: ");
+                            String nombreVisitante = sc.nextLine();
+                            System.out.print("Documento de identidad: ");
+                            String documentoVisitante = sc.nextLine();
+                            System.out.print("Teléfono del visitante: ");
+                            String telefonoVisitante = sc.nextLine();
+
+                            Visitante visitante = new Visitante(nombreVisitante, documentoVisitante, telefonoVisitante);
+                            visitantesEsperados.add(visitante);
+                        }
+
+                        Evento nuevoEvento = new Evento(fechaEvento, residenciaSeleccionada, nombreEvento,
+                                visitantesEsperados);
+
+                        nuevoEvento.guardarEvento();
+
+                        System.out.println("El evento ha sido registrado exitosamente.");
+                    } else {
+                        System.out.println(
+                                "Residencia no encontrada. Asegúrese de haber ingresado el nombre correctamente.");
+                    }
+
                     break;
                 case 5:
                     System.out.println("Ha elegido la opcion 5");
@@ -182,6 +239,57 @@ public class MenuPrincipal {
 
                 case 7:
                     System.out.println("Ha elegido la opcion 7");
+                    int opcion7;
+                    do {
+                        System.out.println(
+                                "Si va a registrar el ingreso de un vehículo visitante, escriba 1\n" +
+                                        "Si va a registrar la salida de un vehículo visitante, escriba 2\n" +
+                                        "Si desea volver al menú principal, escriba 0");
+                        opcion7 = sc.nextInt();
+
+                        switch (opcion7) {
+                            case 1:
+                                System.out.println("Ingrese la placa del vehículo visitante: ");
+                                String placaIngreso = sc.next();
+                                if (vehiculoVisitante1.getPlaca().equals(placaIngreso)) {
+                                    System.out.println("Vehículo encontrado.");
+                                    System.out.println("Eventos del día disponibles:");
+                                    System.out.println("Evento 1: Fiesta Familiar - 5 PM");
+                                    System.out.println("Evento 2: Reunión Comunitaria - 7 PM");
+                                    System.out.println("Visitantes autorizados: ");
+                                    System.out.println("1. Maria García (Autorizada)");
+
+                                    if (vehiculoVisitante1.isAutorizado()) {
+                                        vehiculoVisitante1.registrarIngreso(); // Se llama y guarda el registro
+                                    } else {
+                                        vehiculoVisitante1.solicitarAutorizacion();
+                                        vehiculoVisitante1.registrarIngreso(); // Se llama y guarda el registro
+                                    }
+                                } else {
+                                    System.out.println("Vehículo no encontrado.");
+                                }
+                                break;
+
+                            case 2:
+                                System.out
+                                        .println("Ingrese la placa del vehículo visitante para registrar su salida: ");
+                                String placaSalida = sc.next();
+                                if (vehiculoVisitante1.getPlaca().equals(placaSalida)) {
+                                    vehiculoVisitante1.registrarSalida(); // Se llama y guarda el registro de salida
+                                } else {
+                                    System.out.println("Vehículo no encontrado.");
+                                }
+                                break;
+
+                            case 0:
+                                System.out.println("Regresando al menú principal...");
+                                break;
+
+                            default:
+                                System.out.println("Opción inválida. Intente nuevamente.");
+                                break;
+                        }
+                    } while (opcion7 != 0);
                     break;
                 case 8:
                     System.out.println("Ha elegido la opcion 8");
@@ -198,4 +306,5 @@ public class MenuPrincipal {
         } while (eleccion != 9);
         sc.close();
     }
+
 }

@@ -71,11 +71,31 @@ private List<Visitante> visitantesEsperados;
         visitantesEsperados.add(visitante);
         visitantes++; 
     }
+    //*Guardar Evento */
     public void guardarEvento() {
         try (FileWriter writer = new FileWriter("Evento.txt", true)) {
-            writer.write(fecha + "," + ubicacion.getUbicacion() + "," + nombreEvento + "," + visitantes + "\n");
+            // Guardar los detalles del evento
+            writer.write("Fecha: " + fecha + "\n");
+            writer.write("Ubicación: " + ubicacion.getUbicacion() + "\n");
+            writer.write("Nombre del Evento: " + nombreEvento + "\n");
+            writer.write("Visitantes esperados: " + visitantes + "\n");
+    
+            // Guardar los detalles de los visitantes
+            if (visitantesEsperados != null && !visitantesEsperados.isEmpty()) {
+                for (Visitante visitante : visitantesEsperados) {
+                    writer.write("Visitante: " + visitante.getNombre() + "\n");
+                    writer.write("Documento de Identidad: " + visitante.getDocumentoIdentidad() + "\n");
+                    writer.write("Teléfono: " + visitante.getTelefono() + "\n");
+                    writer.write("Residencia de Destino: " + 
+                                 (visitante.getResidenciaDestino() != null ? visitante.getResidenciaDestino().getVilla() : "No asignada") + "\n");
+                    writer.write("Autorizado: " + (visitante.isAutorizado() ? "Sí" : "No") + "\n");
+                    writer.write("--------------\n"); // Separador entre visitantes
+                }
+            }
+    
+            writer.write("--------------\n"); // Separador entre eventos
         } catch (IOException e) {
             System.err.println("Error al guardar el evento: " + e.getMessage());
-        }    
-
-}}
+        }
+    }
+}

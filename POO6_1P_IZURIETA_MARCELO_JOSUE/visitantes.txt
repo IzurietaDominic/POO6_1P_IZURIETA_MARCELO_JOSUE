@@ -1,0 +1,3 @@
+Registro N° 1
+Ingreso - Vehículo: XYZ789, Visitante: Maria García
+--------------
